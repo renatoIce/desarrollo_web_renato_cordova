@@ -1,141 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Lista de Miembros</title>
+    </head>
+    <body>
+        <table>
+            <thead>
+                <button onclick="window.location.href='indice.html'">Volver al índice</button><br>
 
-<table>
-    <thead>
-        <button onclick="window.location.href='indice.html'">Volver al índice</button><br>
+                <select onchange="ordenar(this.value)">
+                    <option value="">-- Orden Ascendente --</option>
+                    <option value="edad">Edad</option>
+                    <option value="nombre">Nombre</option>
+                    <option value="tipo">Tipo</option>
+                    <option value="actividad">Actividad</option>
+                    <option value="horas">Horas</option>
+                </select>
 
-        <select onchange="ordenar(this.value)">
-            <option value="">-- Orden Ascendente --</option>
-            <option value="edad">Edad</option>
-            <option value="nombre">Nombre</option>
-            <option value="tipo">Tipo</option>
-            <option value="actividad">Actividad</option>
-            <option value="horas">Horas</option>
-        </select>
+                <select id="filtro-tipo" onchange="filtrar()">
+                    <option value="">-- Tipo de miembro --</option>
+                    <option value="Estudiante">Estudiante</option>
+                    <option value="Académico">Académico</option>
+                    <option value="Funcionario">Funcionario</option>
+                </select>
 
-        <select id="filtro-tipo" onchange="filtrar()">
-            <option value="">-- Tipo de miembro --</option>
-            <option value="Estudiante">Estudiante</option>
-            <option value="Académico">Académico</option>
-            <option value="Funcionario">Funcionario</option>
-        </select>
+                <select id="filtro-actividad" onchange="filtrar()">
+                    <option value="">-- Actividad --</option>
+                    <option value="Social">Social</option>
+                    <option value="Deportiva">Deportiva</option>
+                    <option value="Tecnológica">Tecnológica</option>
+                    <option value="Recreativa">Recreativa</option>
+                    <option value="Artistica">Artística</option>
+                </select>
 
-        <select id="filtro-actividad" onchange="filtrar()">
-            <option value="">-- Actividad --</option>
-            <option value="Social">Social</option>
-            <option value="Deportiva">Deportiva</option>
-            <option value="Tecnológica">Tecnológica</option>
-            <option value="Recreativa">Recreativa</option>
-            <option value="Artistica">Artística</option>
-        </select>
+                <select id="filtro-dia" onchange="filtrar()">
+                    <option value="">-- Día --</option>
+                    <option value="Lunes">Lunes</option>
+                    <option value="Martes">Martes</option>
+                    <option value="Miércoles">Miércoles</option>
+                    <option value="Jueves">Jueves</option>
+                    <option value="Viernes">Viernes</option>
+                    <option value="Sabado">Sábado</option>
+                    <option value="Domingo">Domingo</option>
+                </select>
 
-        <select id="filtro-dia" onchange="filtrar()">
-            <option value="">-- Día --</option>
-            <option value="Lunes">Lunes</option>
-            <option value="Martes">Martes</option>
-            <option value="Miércoles">Miércoles</option>
-            <option value="Jueves">Jueves</option>
-            <option value="Viernes">Viernes</option>
-            <option value="Sabado">Sábado</option>
-            <option value="Domingo">Domingo</option>
-        </select>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                    <th>Tipo</th>
+                    <th>Actividad</th>
+                    <th>Horas</th>
+                    <th>Día</th>
+                </tr>
+            </thead>
+            <tbody id="tbody-miembros">
+                
+            </tbody>
+        </table>
 
-        <tr>
-            <th>Nombre</th>
-            <th>Edad</th>
-            <th>Tipo</th>
-            <th>Actividad</th>
-            <th>Horas</th>
-            <th>Día</th>
-        </tr>
-    </thead>
-    <tbody id="tbody-miembros">
-        
-    </tbody>
-</table>
+        <script>
 
-<script>
-
-    const miembros = [
-    { nombre: "Juan Pérez", edad: 20, tipo: "Estudiante", actividad: "Social", horas: 2, dia: "Lunes" },
-    { nombre: "Juan Pérez", edad: 20, tipo: "Estudiante", actividad: "Deportiva", horas: 3, dia: "Miércoles" },
-    { nombre: "María López", edad: 25, tipo: "Académico", actividad: "Tecnológica", horas: 4, dia: "Martes" },
-    { nombre: "Carlos Soto", edad: 30, tipo: "Funcionario", actividad: "Social", horas: 1, dia: "Viernes" },
-    { nombre: "Ana Muñoz", edad: 22, tipo: "Estudiante", actividad: "Deportiva", horas: 2, dia: "Jueves" },
-    { nombre: "Carlos Tipi", edad: 40, tipo: "Académico", actividad: "Artistica", horas: 7, dia: "Sábado" },
-    { nombre: "Carlos Tipi", edad: 40, tipo: "Académico", actividad: "Recreativa", horas: 10, dia: "Domingo" },
-    { nombre: "Vanessa Paredes", edad: 90, tipo: "Funcionario", actividad: "Recreativa", horas: 5, dia: "Domingo" },
-    { nombre: "Sam Alpides", edad: 17, tipo: "Estudiante", actividad: "Social", horas: 3, dia: "Viernes" },
-    { nombre: "Abraham Coyote", edad: 29, tipo: "Estudiante", actividad: "Deportiva", horas: 5, dia: "Miércoles" }];
+            const miembros = [
+            { nombre: "Juan Pérez", edad: 20, tipo: "Estudiante", actividad: "Social", horas: 2, dia: "Lunes" },
+            { nombre: "Juan Pérez", edad: 20, tipo: "Estudiante", actividad: "Deportiva", horas: 3, dia: "Miércoles" },
+            { nombre: "María López", edad: 25, tipo: "Académico", actividad: "Tecnológica", horas: 4, dia: "Martes" },
+            { nombre: "Carlos Soto", edad: 30, tipo: "Funcionario", actividad: "Social", horas: 1, dia: "Viernes" },
+            { nombre: "Ana Muñoz", edad: 22, tipo: "Estudiante", actividad: "Deportiva", horas: 2, dia: "Jueves" },
+            { nombre: "Carlos Tipi", edad: 40, tipo: "Académico", actividad: "Artistica", horas: 7, dia: "Sábado" },
+            { nombre: "Carlos Tipi", edad: 40, tipo: "Académico", actividad: "Recreativa", horas: 10, dia: "Domingo" },
+            { nombre: "Vanessa Paredes", edad: 90, tipo: "Funcionario", actividad: "Recreativa", horas: 5, dia: "Domingo" },
+            { nombre: "Sam Alpides", edad: 17, tipo: "Estudiante", actividad: "Social", horas: 3, dia: "Viernes" },
+            { nombre: "Abraham Coyote", edad: 29, tipo: "Estudiante", actividad: "Deportiva", horas: 5, dia: "Miércoles" }];
 
 
-    function generarTabla(datos) {
-    const tbody = document.getElementById("tbody-miembros");
-    tbody.innerHTML = "";
+            function generarTabla(datos) {
+            const tbody = document.getElementById("tbody-miembros");
+            tbody.innerHTML = "";
 
-    datos.forEach(function(fila) {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td>${fila.nombre}</td>
-            <td>${fila.edad}</td>
-            <td>${fila.tipo}</td>
-            <td>${fila.actividad}</td>
-            <td>${fila.horas}</td>
-            <td>${fila.dia}</td>
-        `;
-        tbody.appendChild(tr);
-    });
-}
+            datos.forEach(function(fila) {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${fila.nombre}</td>
+                    <td>${fila.edad}</td>
+                    <td>${fila.tipo}</td>
+                    <td>${fila.actividad}</td>
+                    <td>${fila.horas}</td>
+                    <td>${fila.dia}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
 
-    generarTabla(miembros);
+            generarTabla(miembros);
 
-    function ordenar(criterio) {
-    const datos = [
-    { nombre: "Juan Pérez", edad: 20, tipo: "Estudiante", actividad: "Social", horas: 2, dia: "Lunes" },
-    { nombre: "Juan Pérez", edad: 20, tipo: "Estudiante", actividad: "Deportiva", horas: 3, dia: "Miércoles" },
-    { nombre: "María López", edad: 25, tipo: "Académico", actividad: "Tecnológica", horas: 4, dia: "Martes" },
-    { nombre: "Carlos Soto", edad: 30, tipo: "Funcionario", actividad: "Social", horas: 1, dia: "Viernes" },
-    { nombre: "Ana Muñoz", edad: 22, tipo: "Estudiante", actividad: "Deportiva", horas: 2, dia: "Jueves" },
-    { nombre: "Carlos Tipi", edad: 40, tipo: "Académico", actividad: "Artistica", horas: 7, dia: "Sábado" },
-    { nombre: "Carlos Tipi", edad: 40, tipo: "Académico", actividad: "Recreativa", horas: 10, dia: "Domingo" },
-    { nombre: "Vanessa Paredes", edad: 90, tipo: "Funcionario", actividad: "Recreativa", horas: 5, dia: "Domingo" },
-    { nombre: "Sam Alpides", edad: 17, tipo: "Estudiante", actividad: "Social", horas: 3, dia: "Viernes" },
-    { nombre: "Abraham Coyote", edad: 29, tipo: "Estudiante", actividad: "Deportiva", horas: 5, dia: "Miércoles" }];
+            function ordenar(criterio) {
+            const datos = [
+            { nombre: "Juan Pérez", edad: 20, tipo: "Estudiante", actividad: "Social", horas: 2, dia: "Lunes" },
+            { nombre: "Juan Pérez", edad: 20, tipo: "Estudiante", actividad: "Deportiva", horas: 3, dia: "Miércoles" },
+            { nombre: "María López", edad: 25, tipo: "Académico", actividad: "Tecnológica", horas: 4, dia: "Martes" },
+            { nombre: "Carlos Soto", edad: 30, tipo: "Funcionario", actividad: "Social", horas: 1, dia: "Viernes" },
+            { nombre: "Ana Muñoz", edad: 22, tipo: "Estudiante", actividad: "Deportiva", horas: 2, dia: "Jueves" },
+            { nombre: "Carlos Tipi", edad: 40, tipo: "Académico", actividad: "Artistica", horas: 7, dia: "Sábado" },
+            { nombre: "Carlos Tipi", edad: 40, tipo: "Académico", actividad: "Recreativa", horas: 10, dia: "Domingo" },
+            { nombre: "Vanessa Paredes", edad: 90, tipo: "Funcionario", actividad: "Recreativa", horas: 5, dia: "Domingo" },
+            { nombre: "Sam Alpides", edad: 17, tipo: "Estudiante", actividad: "Social", horas: 3, dia: "Viernes" },
+            { nombre: "Abraham Coyote", edad: 29, tipo: "Estudiante", actividad: "Deportiva", horas: 5, dia: "Miércoles" }];
 
-    datos.sort(function(a, b) {
-        if (a[criterio] < b[criterio]) return -1;
-        if (a[criterio] > b[criterio]) return 1;
-        return 0;
-    });
-    generarTabla(datos);
-}
-    function filtrar() {
-    const tipo = document.getElementById("filtro-tipo").value;
-    const actividad = document.getElementById("filtro-actividad").value;
-    const dia = document.getElementById("filtro-dia").value;
+            datos.sort(function(a, b) {
+                if (a[criterio] < b[criterio]) return -1;
+                if (a[criterio] > b[criterio]) return 1;
+                return 0;
+            });
+            generarTabla(datos);
+        }
+            function filtrar() {
+            const tipo = document.getElementById("filtro-tipo").value;
+            const actividad = document.getElementById("filtro-actividad").value;
+            const dia = document.getElementById("filtro-dia").value;
 
-    datos =[
-    { nombre: "Juan Pérez", edad: 20, tipo: "Estudiante", actividad: "Social", horas: 2, dia: "Lunes" },
-    { nombre: "Juan Pérez", edad: 20, tipo: "Estudiante", actividad: "Deportiva", horas: 3, dia: "Miércoles" },
-    { nombre: "María López", edad: 25, tipo: "Académico", actividad: "Tecnológica", horas: 4, dia: "Martes" },
-    { nombre: "Carlos Soto", edad: 30, tipo: "Funcionario", actividad: "Social", horas: 1, dia: "Viernes" },
-    { nombre: "Ana Muñoz", edad: 22, tipo: "Estudiante", actividad: "Deportiva", horas: 2, dia: "Jueves" },
-    { nombre: "Carlos Tipi", edad: 40, tipo: "Académico", actividad: "Artistica", horas: 7, dia: "Sábado" },
-    { nombre: "Carlos Tipi", edad: 40, tipo: "Académico", actividad: "Recreativa", horas: 10, dia: "Domingo" },
-    { nombre: "Vanessa Paredes", edad: 90, tipo: "Funcionario", actividad: "Recreativa", horas: 5, dia: "Domingo" },
-    { nombre: "Sam Alpides", edad: 17, tipo: "Estudiante", actividad: "Social", horas: 3, dia: "Viernes" },
-    { nombre: "Abraham Coyote", edad: 29, tipo: "Estudiante", actividad: "Deportiva", horas: 5, dia: "Miércoles" }];
+            datos =[
+            { nombre: "Juan Pérez", edad: 20, tipo: "Estudiante", actividad: "Social", horas: 2, dia: "Lunes" },
+            { nombre: "Juan Pérez", edad: 20, tipo: "Estudiante", actividad: "Deportiva", horas: 3, dia: "Miércoles" },
+            { nombre: "María López", edad: 25, tipo: "Académico", actividad: "Tecnológica", horas: 4, dia: "Martes" },
+            { nombre: "Carlos Soto", edad: 30, tipo: "Funcionario", actividad: "Social", horas: 1, dia: "Viernes" },
+            { nombre: "Ana Muñoz", edad: 22, tipo: "Estudiante", actividad: "Deportiva", horas: 2, dia: "Jueves" },
+            { nombre: "Carlos Tipi", edad: 40, tipo: "Académico", actividad: "Artistica", horas: 7, dia: "Sábado" },
+            { nombre: "Carlos Tipi", edad: 40, tipo: "Académico", actividad: "Recreativa", horas: 10, dia: "Domingo" },
+            { nombre: "Vanessa Paredes", edad: 90, tipo: "Funcionario", actividad: "Recreativa", horas: 5, dia: "Domingo" },
+            { nombre: "Sam Alpides", edad: 17, tipo: "Estudiante", actividad: "Social", horas: 3, dia: "Viernes" },
+            { nombre: "Abraham Coyote", edad: 29, tipo: "Estudiante", actividad: "Deportiva", horas: 5, dia: "Miércoles" }];
 
-    if (tipo !== "") {
-        datos = datos.filter(function(fila) { return fila.tipo === tipo; });
-    }
-    if (actividad !== "") {
-        datos = datos.filter(function(fila) { return fila.actividad === actividad; });
-    }
-    if (dia !== "") {
-        datos = datos.filter(function(fila) { return fila.dia === dia; });
-    }
+            if (tipo !== "") {
+                datos = datos.filter(function(fila) { return fila.tipo === tipo; });
+            }
+            if (actividad !== "") {
+                datos = datos.filter(function(fila) { return fila.actividad === actividad; });
+            }
+            if (dia !== "") {
+                datos = datos.filter(function(fila) { return fila.dia === dia; });
+            }
 
-    generarTabla(datos);
-}
+            generarTabla(datos);
+        }
 
-</script>
+        </script>
+    </body>
+</html>

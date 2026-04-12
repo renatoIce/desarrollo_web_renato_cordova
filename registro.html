@@ -1,85 +1,95 @@
-<form id="registro">
-  <label>Nombre: <input type="text" id="nombre"></label>
-  <span id="error-nombre" style="color:red"></span>
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Registro</title>
+    </head>
+    <body>
+        <form id="registro">
+        <label>Nombre: <input type="text" id="nombre"></label>
+        <span id="error-nombre" style="color:red"></span>
 
-  <label>Email: <input type="email" id="email"></label>
-  <span id="error-email" style="color:red"></span>
+        <label>Email: <input type="email" id="email"></label>
+        <span id="error-email" style="color:red"></span>
 
-  <label for="tipomiembro">Tipo de miembro:</label>
-  <span id="error-miembro" style="color:red"></span>
-  <select id="tipomiembro" name="tipomiembro">
-    <option value="">-- Selecciona una opción --</option>
-    <option value="estudiante">Estudiante</option>
-    <option value="academico">Académico</option>
-    <option value="funcionario">Funcionario</option>
-  </select>
+        <label for="tipomiembro">Tipo de miembro:</label>
+        <span id="error-miembro" style="color:red"></span>
+        <select id="tipomiembro" name="tipomiembro">
+            <option value="">-- Selecciona una opción --</option>
+            <option value="estudiante">Estudiante</option>
+            <option value="academico">Académico</option>
+            <option value="funcionario">Funcionario</option>
+        </select>
 
-  <label>Edad: <input type="number" id="edad" min="0" max="120"></label>
-  <span id="error-edad" style="color:red"></span>
+        <label>Edad: <input type="number" id="edad" min="0" max="120"></label>
+        <span id="error-edad" style="color:red"></span>
 
-  <label>Número Contacto (sin +569): <input type="text" id="numerocontacto"></label>
-  <span id="error-nrocontacto" style="color:red"></span>
+        <label>Número Contacto (sin +569): <input type="text" id="numerocontacto"></label>
+        <span id="error-nrocontacto" style="color:red"></span>
 
-  <button type="submit">Registrar</button>
-</form>
+        <button type="submit">Registrar</button>
+        </form>
+    
 
-<script>
-document.getElementById("registro").addEventListener("submit", function(event) {
-    event.preventDefault();
+        <script>
+        document.getElementById("registro").addEventListener("submit", function(event) {
+            event.preventDefault();
 
-    const nombre = document.getElementById("nombre").value.trim();
-    const errornombre=document.getElementById("error-nombre").textContent = "";
+            const nombre = document.getElementById("nombre").value.trim();
+            const errornombre=document.getElementById("error-nombre").textContent = "";
 
-    const email = document.getElementById("email").value;
-    const erroremail=document.getElementById("error-email").textContent="";
+            const email = document.getElementById("email").value;
+            const erroremail=document.getElementById("error-email").textContent="";
 
-    const edad = document.getElementById("edad").value;
-    const erroredad=document.getElementById("error-edad").textContent="";
+            const edad = document.getElementById("edad").value;
+            const erroredad=document.getElementById("error-edad").textContent="";
 
-    const tipoMiembro = document.getElementById("tipomiembro").value;
-    const errormiembro=document.getElementById("error-miembro").textContent="";
+            const tipoMiembro = document.getElementById("tipomiembro").value;
+            const errormiembro=document.getElementById("error-miembro").textContent="";
 
-    const nrocontacto = document.getElementById("numerocontacto").value.trim();
-    const errornrocontacto=document.getElementById("error-nrocontacto").textContent="";
+            const nrocontacto = document.getElementById("numerocontacto").value.trim();
+            const errornrocontacto=document.getElementById("error-nrocontacto").textContent="";
 
     
-    let valido=true ; 
-    if (nombre === "") {
-        document.getElementById("error-nombre").textContent = "El nombre es obligatorio.";
-        valido=false;
-    }
-    if (!/^[a-záéíóúüñA-ZÁÉÍÓÚÜÑ\s]+$/.test(nombre)) {
-        document.getElementById("error-nombre").textContent = "El nombre solo puede contener letras.";
-        valido = false;
-    }
-    if (nombre.length<=3) {
-        document.getElementById("error-nombre").textContent = "Tiene que tener más de 3 letras.";
-        valido=false;
-    }
-    if (!email.includes("@")) {
-        document.getElementById("error-email").textContent = "Email Inválido";
-        valido=false;
-    }
-    if (edad < 1 || edad > 120) {
-        document.getElementById("error-edad").textContent = "Edad Inválida";
-        valido=false;
-    }
+            let valido=true ; 
+            if (nombre === "") {
+                document.getElementById("error-nombre").textContent = "El nombre es obligatorio.";
+                valido=false;
+            }
+            if (!/^[a-záéíóúüñA-ZÁÉÍÓÚÜÑ\s]+$/.test(nombre)) {
+                document.getElementById("error-nombre").textContent = "El nombre solo puede contener letras.";
+                valido = false;
+            }
+            if (nombre.length<=3) {
+                document.getElementById("error-nombre").textContent = "Tiene que tener más de 3 letras.";
+                valido=false;
+            }
+            if (!email.includes("@")) {
+                document.getElementById("error-email").textContent = "Email Inválido";
+                valido=false;
+            }
+            if (edad < 1 || edad > 120) {
+                document.getElementById("error-edad").textContent = "Edad Inválida";
+                valido=false;
+            }
 
-    if (tipoMiembro=="") {
-        document.getElementById("error-miembro").textContent = "Miembro Inválido";
-        valido=false;
-    }
-     if (!/^\d+$/.test(nrocontacto)) {
-        document.getElementById("error-nrocontacto").textContent = "Número Inválido";
-        valido=false;
-    }
+            if (tipoMiembro=="") {
+                document.getElementById("error-miembro").textContent = "Miembro Inválido";
+                valido=false;
+            }
+            if (!/^\d+$/.test(nrocontacto)) {
+                document.getElementById("error-nrocontacto").textContent = "Número Inválido";
+                valido=false;
+            }
     
-    if (nrocontacto.length != 8) {
-        document.getElementById("error-nrocontacto").textContent = "Número Inválido";
-        valido=false;
-    }
-    if (valido){
-        window.location.href = "indice.html";;
-    }
-});
-</script>
+            if (nrocontacto.length != 8) {
+                document.getElementById("error-nrocontacto").textContent = "Número Inválido";
+                valido=false;
+            }
+            if (valido){
+                window.location.href = "indice.html";
+            }
+        });
+        </script>
+    </body>
+</html>
